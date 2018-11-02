@@ -1,0 +1,123 @@
+<!--
+  Copyright 2017 Streampunk Media Ltd.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/javascript">
+    RED.nodes.registerType('svg-render',{
+      category: 'funnel',
+      color: '#FDE8C3',
+      defaults: {
+        name: { value : ""},
+        maxBuffer : { value : 10, validate : RED.validators.number() },
+        description : { value : "" },
+        svgFile : { value : '', required : true },
+        delay : { value : "0", validate : RED.validators.number() },
+        numPushes : { value : 10, validate : RED.validators.number() },
+        width : { value : 1920, validate : RED.validators.number() },
+        height : { value : 1080, validate : RED.validators.number() }
+      },
+      inputs:0,
+      outputs:1,
+      icon: "funnel.png",
+      label: function() {
+        return this.name || "svg-render";
+      }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="svg-render">
+  <!-- Common to all funnel nodes -->
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> name</label>
+    <input type="text" id="node-input-name" placeholder="name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-description"><i class="fa fa-info-circle"></i> description</label>
+    <input type="text" id="node-input-description" placeholder="source and flow description">
+  </div>
+  <div class="form-row">
+    <label for="node-input-maxBuffer"><i class="fa fa-suitcase"></i> max buffer</label>
+    <input type="number" id="node-input-maxBuffer" placeholder="10" style="width: 100px">
+  </div>
+  <div class="form-row">
+    <label for="node-input-svgFile"><i class="fa fa-file"></i> SVG file</label>
+    <input type="text" id="node-input-svgFile" placeholder="test.svg">
+  </div>
+  <div class="form-row">
+    <label for="node-input-delay"><i class="fa fa-clock-o"></i> delay</label>
+    <input type="text" id="node-input-delay" placeholder="0">
+  </div>
+  <div class="form-row">
+    <label for="node-input-numPushes"><i class="fa fa-sign-in"></i> num pushes</label>
+    <input type="text" id="node-input-numPushes" placeholder="10">
+  </div>
+  <div class="form-row"><i class="fa fa-arrows"></i> video details:
+    &nbsp;&nbsp;width <input type="text" id="node-input-width" placeholder="1920" style="width:80px;"/>
+    &nbsp;&nbsp;height <input type="text" id="node-input-height" placeholder="1080" style="width:80px;"/>
+  </div>
+</script>
+
+<style>
+.param-table table, th, td {
+  vertical-align: top;
+  padding: 3px;
+}
+</style>
+
+<script type="text/x-red" data-help-name="svg-render">
+  <h1>Render an image from an SVG definition</h1>
+  <p>Renders a flow of uncompressed grains, creating a new NMOS flow with the correct attributes.</p>
+
+  <h3>Parameters</h3>
+  <div class="param-table">
+  <table>
+   <tr>
+    <th>parameter</th><th>description</th>
+   </tr>
+   <tr>
+    <td><i class="fa fa-tag" aria-hidden="true"></i> name</td>
+    <td>Name of the node. Also output source &amp; flow label.</td>
+   </tr>
+   <tr>
+    <td><i class="fa fa-info-circle"></i> description</td>
+    <td>Optional description of this NMOS output source and output flow.</td>
+   </tr>
+   <tr>
+    <td><i class="fa fa-suitcase"></i> max buffer</td>
+    <td>Maximum number of grains to buffer before overflowing.</td>
+   </tr>
+   <tr>
+    <td><i class="fa fa-file"></i> SVG file</td>
+    <td>Path location for the SVG input file.</td>
+   </tr>
+   <tr>
+    <td><i class="fa fa-clock-o"></i> delay</td>
+    <td>Time in milliseconds between pushes.</td>
+   </tr>
+   <tr>
+    <td><i class="fa fa-sign-in"></i> num pushes</td>
+    <td>Number of times to push the file for render.</td>
+   </tr>
+   <tr>
+    <td><i class="fa fa-arrows"></i> video details</td>
+    <td>Size of video buffer to render to in pixels.</td>
+   </tr>
+  </table>
+  </div>
+
+  <h3>Maturity</h3>
+  <p>Implemented and partially tested. Awaiting automated testing -
+  <a href="https://github.com/Streampunk/dynamorse/issues/5">status</a>.
+</script>
