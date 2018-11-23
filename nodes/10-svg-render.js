@@ -101,7 +101,7 @@ module.exports = function (RED) {
       })
       .catch(this.preFlightError);
 
-    this.on('close', this.close);
+    this.on('close', () => {});
   }
   util.inherits(svgRender, redioactive.Funnel);
   RED.nodes.registerType('svg-render', svgRender);
